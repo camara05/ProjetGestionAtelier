@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,16 +15,19 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class sousReparation {
+public class Facture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idSousReparation;
-    private float cout;
-    private String description;
-    private String piecesUtilisees;
-    private String statut;
+    private Integer idFacture;
+    private float montantPaye;
+    private float montantTotal;
+    private float soldeRestant;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "reparation_id")
-    private reparation reparation;
+    private Reparation reparation;
+    
+    @ManyToOne
+    @JoinColumn(name = "proprietaire_id")
+    private Proprietaire proprietaire;
 }

@@ -3,10 +3,10 @@ package com.example.dao.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.dao.entities.reparateur;
+import com.example.dao.entities.Reparateur;
 
 @Repository
-public interface ReparateurRepository extends JpaRepository<reparateur, Integer> {
+public interface ReparateurRepository extends JpaRepository<Reparateur, Integer> {
 	
 }
 

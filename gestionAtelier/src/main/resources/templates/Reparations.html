@@ -1,0 +1,46 @@
+<!-- reparations.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des réparations</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container my-5">
+        <h1>Liste des réparations</h1>
+        <div th:if="${successMessage}" class="alert alert-success" role="alert" th:text="${successMessage}"></div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Appareil</th>
+                    <th>Client</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="reparation : ${listeReparations.content}">
+                    <td th:text="${reparation.id}"></td>
+                    <td th:text="${reparation.appareil}"></td>
+                    <td th:text="${reparation.client.nom}"></td>
+                    <td th:text="${reparation.statut}"></td>
+                    <td>
+                        <a th:href="@{/reparation/editer/{id}(id=${reparation.id})}" class="btn btn-primary">Modifier</a>
+                        <a th:href="@{/reparation/supprimer/{id}(id=${reparation.id})}" class="btn btn-danger">Supprimer</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav aria-label="Pagination">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, listeReparations.totalPages - 1)}">
+                    <a th:href="@{/reparations(page=${pageNumber})}" th:text="${pageNumber + 1}" class="page-link"></a>
+                </li>
+            </ul>
+        </nav>
+        <a th:href="@{/reparation/ajouter}" class="btn btn-success">Ajouter une réparation</a>
+    </div>
+</body>
+</html>

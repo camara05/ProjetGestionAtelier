@@ -1,0 +1,43 @@
+<form action="/reparations/editer/{{reparation.idReparation}}" method="POST">
+    <div class="form-group">
+        <label for="coutTotal">Coût Total</label>
+        <input type="number" id="coutTotal" name="coutTotal" class="form-control" value="{{reparation.coutTotal}}" required>
+    </div>
+    <div class="form-group">
+        <label for="dateDebut">Date de Début</label>
+        <input type="date" id="dateDebut" name="dateDebut" class="form-control" value="{{reparation.dateDebut}}" required>
+    </div>
+    <div class="form-group">
+        <label for="dateFinEstimee">Date de Fin Estimée</label>
+        <input type="date" id="dateFinEstimee" name="dateFinEstimee" class="form-control" value="{{reparation.dateFinEstimee}}" required>
+    </div>
+    <div class="form-group">
+        <label for="statut">Statut</label>
+        <select id="statut" name="statut" class="form-control" required>
+            <option value="En Cours" {% if reparation.statut == 'En Cours' %}selected{% endif %}>En Cours</option>
+            <option value="Terminé" {% if reparation.statut == 'Terminé' %}selected{% endif %}>Terminé</option>
+            <option value="Annulé" {% if reparation.statut == 'Annulé' %}selected{% endif %}>Annulé</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" class="form-control" required>{{reparation.description}}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="appareil">Appareil</label>
+        <select id="appareil" name="appareil" class="form-control" required>
+            <!-- Remplir avec les appareils disponibles et sélectionner celui de la réparation actuelle -->
+            <option value="1" {% if reparation.appareil.id == 1 %}selected{% endif %}>Appareil 1</option>
+            <option value="2" {% if reparation.appareil.id == 2 %}selected{% endif %}>Appareil 2</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="reparateur">Réparateur</label>
+        <select id="reparateur" name="reparateur" class="form-control" required>
+            <!-- Remplir avec les réparateurs disponibles et sélectionner celui de la réparation actuelle -->
+            <option value="1" {% if reparation.reparateur.id == 1 %}selected{% endif %}>Réparateur 1</option>
+            <option value="2" {% if reparation.reparateur.id == 2 %}selected{% endif %}>Réparateur 2</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Mettre à Jour</button>
+</form>

@@ -10,16 +10,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue("rpt")
+@DiscriminatorValue("prt")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class reparateur extends utilisateur {
-    private float commission;
-    private boolean compteActif;
-    private String specialite;
-
-    @OneToMany(mappedBy = "reparateur")
-    private List<reparation> reparations;
+public class Proprietaire extends utilisateur {
+    private String nomMagasin;
+    @OneToMany(mappedBy = "proprietaire")
+    private List<Facture> factures;
+    
 }
-

@@ -1,11 +1,11 @@
 package com.example.dao.entities;
 
-import java.sql.Date;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,13 +14,16 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class pretEmprunt {
+public class SousReparation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idTransaction;
-    private Date dateTransaction;
-    private float montant;
-    private String statutRemboursement;
+    private Integer idSousReparation;
+    private float cout;
+    private String description;
+    private String piecesUtilisees;
+    private String statut;
+
+    @ManyToOne
+    @JoinColumn(name = "reparation_id")
+    private Reparation reparation;
 }
-
-

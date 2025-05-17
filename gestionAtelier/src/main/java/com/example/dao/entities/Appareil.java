@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class appareil {
+public class Appareil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAppareil;
@@ -30,9 +30,9 @@ public class appareil {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private client client;
+    private Client client;
 
     @OneToOne(mappedBy = "appareil")
-    private reparation reparation;
+    private Reparation reparation;
 }
 

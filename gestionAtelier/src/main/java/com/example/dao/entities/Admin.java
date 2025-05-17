@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class admin extends utilisateur {
+public class Admin extends utilisateur {
     private String permissions;
 }

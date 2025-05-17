@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class client extends utilisateur {
+public class Client extends utilisateur {
     private String photo;
     private String adresse;
     private String codeAcces;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<appareil> appareils;
+    private List<Appareil> appareils;
 }
 
