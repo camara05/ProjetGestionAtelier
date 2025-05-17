@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue("prt")
+@DiscriminatorValue("proprietaire")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

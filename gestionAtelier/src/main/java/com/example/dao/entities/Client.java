@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue("clt")
+@DiscriminatorValue("client")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

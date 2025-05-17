@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@DiscriminatorValue("adm")
+@DiscriminatorValue("admin")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
