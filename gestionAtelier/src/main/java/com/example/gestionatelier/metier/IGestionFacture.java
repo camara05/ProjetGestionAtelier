@@ -1,9 +1,12 @@
 package com.example.gestionatelier.metier;
 
+
+
 import java.util.List;
 
-import org.hibernate.query.Page;
+import org.springframework.data.domain.Page;
 
+import com.example.dao.entities.Client;
 import com.example.dao.entities.Facture;
 import com.example.dao.entities.Proprietaire;
 import com.example.dao.entities.Reparation;
@@ -14,9 +17,8 @@ public interface IGestionFacture {
 	void supprimerFacture(Facture f);
 	void supprimerFacture(Integer idFacture);
 	Facture rechercherFacture(Integer idFacture);
-	Page listerFactures(int numPage);
+	Page<Facture> listerFactures(int numPage);
 	
 	List<Reparation> listerReparations();
-	List<Proprietaire> listerProprietairs();
 
 }

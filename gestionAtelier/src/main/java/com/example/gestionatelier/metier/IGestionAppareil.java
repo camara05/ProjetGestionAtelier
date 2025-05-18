@@ -2,12 +2,11 @@ package com.example.gestionatelier.metier;
 
 import java.util.List;
 
-import org.hibernate.query.Page;
+import org.springframework.data.domain.Page;
 
 import com.example.dao.entities.Appareil;
 import com.example.dao.entities.Client;
 import com.example.dao.entities.Reparation;
-
 
 
 public interface IGestionAppareil {
@@ -16,7 +15,8 @@ public interface IGestionAppareil {
     void supprimerAppareil(Appareil a);
     void supprimerAppareil(Integer idAppareil);
     Appareil rechercherAppareil(Integer idAppareil);
-    Page listerAppareils(int numPage);
+    Page<Appareil> listerAppareils(int numPage);
+    List<Appareil> rechercherAppareils(String marque, String model);
     
     List<Client> listerClients();
     List<Reparation> listerReparations();

@@ -2,6 +2,7 @@ package com.example.dao.entities;
 
 import java.sql.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,11 +22,17 @@ public class Appareil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAppareil;
+    @Column
     private Date dateDepot;
+    @Column
     private String descriptionPanne;
+    @Column
     private String IMEI;
+    @Column
     private String marque;
+    @Column
     private String modele;
+    @Column
     private String type;
 
     @ManyToOne

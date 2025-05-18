@@ -1,54 +1,88 @@
 package com.example.gestionatelier.metier;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.hibernate.query.Page;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import com.example.dao.entities.Appareil;
 import com.example.dao.entities.Client;
+import com.example.dao.repositories.AppareilRepository;
+import com.example.dao.repositories.ClientRepository;
 
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+@Service
+@AllArgsConstructor
 public class GestionClient implements IGestionClient{
+	
+	private ClientRepository clientRepo;
+	private final AppareilRepository appareilRepo;
 
 	@Override
+	@Transactional
 	public Client ajouterClient(Client c) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		return clientRepo.save(c);
+    }
 
 	@Override
+	@Transactional
 	public Client modifierClient(Client c) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        return clientRepo.save(c);
+    }
 
 	@Override
+	@Transactional
 	public void supprimerClient(Client c) {
-		// TODO Auto-generated method stub
-		
+		clientRepo.delete(c);
 	}
 
 	@Override
+	@Transactional
 	public void supprimerClient(Integer idClient) {
-		// TODO Auto-generated method stub
-		
+		clientRepo.deleteById(idClient);
+
 	}
 
 	@Override
+	@Transactional
 	public Client rechercherClient(Integer idClient) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Client> clientOpt = clientRepo.findById(idClient);
+		if (clientOpt.isPresent()) {
+			return clientOpt.get();
+		} else {
+			throw new RuntimeException("Client introuvable.");
+		}
 	}
 
 	@Override
-	public Page listerClients(int numPage) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public Page<Client> listerClients(int numPage) {
+        PageRequest pageable = PageRequest.of(numPage, 10);
+        return clientRepo.findAll(pageable);
 	}
+	
 
+	
 	@Override
+	@Transactional
 	public List<Appareil> listerAppareils() {
-		// TODO Auto-generated method stub
-		return null;
+		return appareilRepo.findAll();
 	}
+
+	@Override
+	@Transactional
+	public List<Client> rechercherClients(String nom, String prenom) {
+		List<Client> clients = clientRepo.findByNomAndPrenom(nom, prenom);
+		if (clients.isEmpty()) {
+			throw new RuntimeException("Aucun client trouvé.");
+		}
+		return clients;
+	}
+	
+
+
 
 }

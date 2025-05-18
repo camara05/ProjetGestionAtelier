@@ -1,61 +1,77 @@
 package com.example.gestionatelier.metier;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.hibernate.query.Page;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
+import com.example.dao.entities.Appareil;
 import com.example.dao.entities.Facture;
-import com.example.dao.entities.Proprietaire;
 import com.example.dao.entities.Reparation;
+import com.example.dao.repositories.FactureRepository;
+import com.example.dao.repositories.ReparationRepository;
 
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+@Service
+@AllArgsConstructor
 public class GestionFacture implements IGestionFacture{
+	
+	private FactureRepository factureRepo;
+	private final ReparationRepository reparationRepo;
 
 	@Override
+	@Transactional
 	public Facture ajouterFacture(Facture f) {
-		// TODO Auto-generated method stub
-		return null;
+		return factureRepo.save(f);
 	}
 
 	@Override
+	@Transactional
 	public Facture modifierFacture(Facture f) {
-		// TODO Auto-generated method stub
-		return null;
+		return factureRepo.save(f);
 	}
 
 	@Override
+	@Transactional
 	public void supprimerFacture(Facture f) {
-		// TODO Auto-generated method stub
-		
+		factureRepo.delete(f);
 	}
 
 	@Override
+	@Transactional
 	public void supprimerFacture(Integer idFacture) {
-		// TODO Auto-generated method stub
+		factureRepo.deleteById(idFacture);
 		
 	}
 
 	@Override
+	@Transactional
 	public Facture rechercherFacture(Integer idFacture) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Facture> factureOpt = factureRepo.findById(idFacture);
+		if (factureOpt.isPresent()) {
+			return factureOpt.get();
+		} else {
+			throw new RuntimeException("Facture introuvable.");
+		}
+
 	}
 
 	@Override
-	public Page listerFactures(int numPage) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public Page<Facture> listerFactures(int numPage) {
+		PageRequest pageable = PageRequest.of(numPage, 10);
+		return factureRepo.findAll(pageable);
+
 	}
 
 	@Override
+	@Transactional
 	public List<Reparation> listerReparations() {
-		// TODO Auto-generated method stub
-		return null;
+		return reparationRepo.findAll();
 	}
 
-	@Override
-	public List<Proprietaire> listerProprietairs() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

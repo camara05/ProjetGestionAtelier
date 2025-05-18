@@ -1,7 +1,8 @@
 package com.example.gestionatelier.metier;
 
-import org.hibernate.query.Page;
+import org.springframework.data.domain.Page;
 
+import com.example.dao.entities.Client;
 import com.example.dao.entities.PretEmprunt;
 
 public interface IGestionPretEmprunt {
@@ -10,6 +11,6 @@ public interface IGestionPretEmprunt {
     void supprimerPretEmprunt(PretEmprunt pe);
     void supprimerPretEmprunt(Integer idPretEmprunt);
     PretEmprunt rechercherPretEmprunt(Integer idPretEmprunt);
-    Page listerPretEmprunts(int numPage);
+    Page<PretEmprunt> listerPretEmprunts(int numPage);
 
 }

@@ -11,12 +11,17 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@MappedSuperclass
 public abstract class utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column
     private String motDePasse;
+    @Column
     private String mail;
+    @Column
     private String nom;
+    @Column
     private String prenom;
 }

@@ -1,8 +1,10 @@
 package com.example.gestionatelier.metier;
 
-import org.hibernate.query.Page;
+import org.springframework.data.domain.Page;
+
 
 import com.example.dao.entities.Admin;
+import com.example.dao.entities.Client;
 
 public interface IGestionAdmin {
 	Admin ajouterAdmin(Admin a);
@@ -10,7 +12,7 @@ public interface IGestionAdmin {
     void supprimerAdmin(Admin a);
     void supprimerAdmin(Integer idAdmin);
     Admin rechercherAdmin(Integer idAdmin);
-    Page listerAdmins(int numPage);
+    Page<Admin> listerAdmins(int numPage);
     
     
 
