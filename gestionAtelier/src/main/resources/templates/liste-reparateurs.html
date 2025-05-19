@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Réparateurs</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Liste des Réparateurs</h2>
+    
+    <div th:if="${#lists.isEmpty(reparateurs)}">
+        <p class="text-danger">Aucun réparateur trouvé.</p>
+    </div>
+
+    <table class="table table-bordered" th:if="${!#lists.isEmpty(reparateurs)}">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Contact</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reparateur : ${reparateurs}">
+            <td th:text="${reparateur.id}"></td>
+            <td th:text="${reparateur.nom}"></td>
+            <td th:text="${reparateur.prenom}"></td>
+            <td th:text="${reparateur.contact}"></td>
+            <td>
+                <a th:href="@{'/reparateurs/modifier/' + ${reparateur.id}}" class="btn btn-warning btn-sm">Modifier</a>
+                <a th:href="@{'/reparateurs/supprimer/' + ${reparateur.id}}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce réparateur ?');">Supprimer</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    
+    <a href="/reparateurs/ajouter" class="btn btn-primary">Ajouter un Réparateur</a>
+</div>
+</body>
+</html>

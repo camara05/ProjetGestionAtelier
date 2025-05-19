@@ -31,7 +31,7 @@ public class Appareil {
     @Column
     private String marque;
     @Column
-    private String modele;
+    private String model;
     @Column
     private String type;
 

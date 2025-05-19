@@ -5,8 +5,8 @@ import lombok.*;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+
+
 @DiscriminatorColumn(name = "role")
 @Data
 @NoArgsConstructor
@@ -24,4 +24,6 @@ public abstract class utilisateur {
     private String nom;
     @Column
     private String prenom;
+    @Column
+    private Integer telephone;
 }

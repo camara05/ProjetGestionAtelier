@@ -1,4 +1,3 @@
-
 package com.example.gestionatelier.presentation;
 
 import com.example.dao.entities.Reparateur;
@@ -7,84 +6,74 @@ import com.example.gestionatelier.metier.IGestionReparateur;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/reparateurs")
+@Controller
+@RequestMapping("/reparateurs")
 @AllArgsConstructor
 public class ReparateurController {
 
-    private final IGestionReparateur gestionReparateur;
+	private final IGestionReparateur gestionReparateur;
 
-    // ➡️ Ajouter un nouveau réparateur
-    @PostMapping
-    public ResponseEntity<Reparateur> ajouterReparateur(@RequestBody Reparateur reparateur) {
-        try {
-            Reparateur savedReparateur = gestionReparateur.ajouterReparateur(reparateur);
-            return ResponseEntity.ok(savedReparateur);
-        } catch (Exception e) {
-            return ResponseEntity.status(500).build();
-        }
-    }
+	@GetMapping("/ajouter")
+	public String afficherFormulaireAjout(Model model) {
+		model.addAttribute("reparateur", new Reparateur());
+		return "ajouter-reparateur"; // Le nom du fichier HTML sans l'extension
+	}
 
-    // ➡️ Modifier un réparateur existant
-    @PutMapping("/{id}")
-    public ResponseEntity<Reparateur> modifierReparateur(@PathVariable Integer id, @RequestBody Reparateur reparateur) {
-        try {
-            reparateur.setId(id); // On fixe l'ID pour être sûr de modifier le bon réparateur
-            Reparateur updatedReparateur = gestionReparateur.modifierReparateur(reparateur);
-            return ResponseEntity.ok(updatedReparateur);
-        } catch (Exception e) {
-            return ResponseEntity.status(500).build();
-        }
-    }
+	@PostMapping("/ajouter")
+	public String ajouterReparateur(@ModelAttribute Reparateur reparateur, RedirectAttributes redirectAttributes) {
+		try {
+			gestionReparateur.ajouterReparateur(reparateur);
+			redirectAttributes.addFlashAttribute("message", "Réparateur ajouté avec succès !");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("error", "Erreur lors de l'ajout du réparateur.");
+		}
+		return "redirect:/reparateurs/ajouter";
 
-    // ➡️ Supprimer un réparateur par ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> supprimerReparateur(@PathVariable Integer id) {
-        try {
-            gestionReparateur.supprimerReparateur(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(500).build();
-        }
-    }
+	}
 
-    // ➡️ Rechercher un réparateur par ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Reparateur> rechercherReparateur(@PathVariable Integer id) {
-        try {
-            Reparateur reparateur = gestionReparateur.rechercherReparateur(id);
-            return ResponseEntity.ok(reparateur);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+	// ➡️ Afficher la liste des réparateurs
+	@GetMapping("/liste")
+	public String afficherListeReparateurs(Model model) {
+		List<Reparateur> reparateurs = gestionReparateur.listerReparateurs(0).getContent();
+		model.addAttribute("reparateurs", reparateurs);
+		return "liste-reparateurs";
+	}
 
-    // ➡️ Lister les réparateurs avec pagination
-    @GetMapping
-    public ResponseEntity<Page<Reparateur>> listerReparateurs(@RequestParam(defaultValue = "0") int page) {
-        Page<Reparateur> reparateurs = gestionReparateur.listerReparateurs(page);
-        return ResponseEntity.ok(reparateurs);
-    }
+	// ➡️ Modifier un réparateur
+	@GetMapping("/modifier/{id}")
+	public String afficherFormulaireModification(@PathVariable Integer id, Model model) {
+		Reparateur reparateur = gestionReparateur.rechercherReparateur(id);
+		model.addAttribute("reparateur", reparateur);
+		return "modifier-reparateur";
+	}
 
-    // ➡️ Lister toutes les réparations
-    @GetMapping("/reparations")
-    public ResponseEntity<List<Reparation>> listerReparations() {
-        List<Reparation> reparations = gestionReparateur.listerReparations();
-        return ResponseEntity.ok(reparations);
-    }
+	@PostMapping("/modifier")
+	public String modifierReparateur(@ModelAttribute Reparateur reparateur, RedirectAttributes redirectAttributes) {
+		try {
+			gestionReparateur.modifierReparateur(reparateur);
+			redirectAttributes.addFlashAttribute("message", "Réparateur modifié avec succès !");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("error", "Erreur lors de la modification du réparateur.");
+		}
+		return "redirect:/reparateurs/liste";
+	}
 
-    // ➡️ Rechercher un réparateur par nom et prénom
-    @GetMapping("/search")
-    public ResponseEntity<List<Reparateur>> rechercherReparateurs(@RequestParam String nom, @RequestParam String prenom) {
-        try {
-            List<Reparateur> reparateurs = gestionReparateur.rechercherReparateurs(nom, prenom);
-            return ResponseEntity.ok(reparateurs);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+	// ➡️ Supprimer un réparateur
+	@GetMapping("/supprimer/{id}")
+	public String supprimerReparateur(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+		try {
+			gestionReparateur.supprimerReparateur(id);
+			redirectAttributes.addFlashAttribute("message", "Réparateur supprimé avec succès !");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("error", "Erreur lors de la suppression du réparateur.");
+		}
+		return "redirect:/reparateurs/liste";
+	}
 }

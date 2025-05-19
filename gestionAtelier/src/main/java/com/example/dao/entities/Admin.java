@@ -1,5 +1,6 @@
 package com.example.dao.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -12,5 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Admin extends utilisateur {
-    private String permissions;
+	@Column
+	private String permissions;
 }
